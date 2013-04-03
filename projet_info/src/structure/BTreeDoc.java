@@ -1,55 +1,45 @@
 package structure;
 
-public class BTree {
-	//Utilisé pour connaitre l'id du prochain mot
-	static int whats_the_id = 1;
+public class BTreeDoc {
 	
 	String t;
-	int ft;
-	int id;
-	BTree gauche, droit;
+	int frequence;
+	BTreeDoc gauche, droit;
 	
 	//Constructeurs
-	public BTree() {
+	public BTreeDoc() {
 		this.t = null;
-		this.ft = 0;
-		this.id = -1;
+		this.frequence = 0;
 		this.gauche = this.droit = null;
 	}
 	
-	public BTree(String t, int ft, int id, BTree gauche, BTree droit) {
+	public BTreeDoc(String t, int ft, BTreeDoc gauche, BTreeDoc droit) {
 		this.t = t;
-		this.ft = ft;
-		this.id = id;
+		this.frequence = frequence;
 		this.gauche = gauche ;
 		this.droit = droit;
 	}
 
 
 	// Insere un nouveau mot dans l'arbre
-	public int insererMot(String mot) { 
-		return insererMot(mot, 1);
+	public void insererMot(String mot) { 
+		insererMot(mot, 1);
 	}
-	public int insererMot(String mot, int ft) {
-		int id; 
+	public void insererMot(String mot, int ft) {
 		if (isLeaf())
-			return ajouterMot(mot,ft);
+			ajouterMot(mot,ft);
 		else if (mot.compareTo(this.t) < 0) {
-			id = this.gauche.insererMot(mot,ft);
+			this.gauche.insererMot(mot,ft);
 			if (this.gauche.size() > this.droit.size())
 				equilibrageGauche();
-			return id;
 		}
 		else if (mot.compareTo(this.t) > 0) {
-			id = this.droit.insererMot(mot,ft);
+			this.droit.insererMot(mot,ft);
 			if (this.gauche.size() + 1 < this.droit.size())
 				equilibrageDroite();
-			return id;
 		}
-		else {
-			this.ft++;
-			return this.id;
-		}
+		else
+			this.frequence++;
 	}
 	
 	
@@ -67,25 +57,30 @@ public class BTree {
 		if (isLeaf())
 			return "";
 		else
-			return "" + this.gauche + "(" + this.t + ", Freq : " + this.ft + ", Id : " + this.id + 
-					", Taille Gauche : " + this.gauche.size() + ", Taille Droite : " + this.droit.size() + ")" + NEW_LINE + this.droit;
-	}
+			return "" + this.gauche + "(" + this.t + ", Freq : " + this.frequence +  
+					", Taille Gauche : " + this.gauche.size() + ", Taille Droite : " + this.droit.size() + ")" + NEW_LINE + this.droit;	}
 
 	
+	//Calcul de Wd à partir de l'arbre
+	public double calculWd() {
+		return Math.sqrt(this.calculs());
+	}
+	private double calculs() {
+		if (isLeaf())
+			return 0;
+		return Math.pow(1 + Math.log(this.frequence), 2) + this.gauche.calculs() + this.droit.calculs();
+	}
 	
 //----------------------------------
 // Fonctions auxiliaires pour construire un BTree	
 //----------------------------------
 	//Update les champs lors de l'insertion
-	private int ajouterMot(String t, int ft) {
+	private void ajouterMot(String t, int ft) {
 		this.t = t;
-		this.ft = ft;
-		this.id = whats_the_id++; //affecte puis incremente
+		this.frequence = ft;
 		//TODO est-ce vraiment genant d'avoir un étage de feuilles vides ?! modifiable facilement
-		this.gauche = new BTree();
-		this.droit = new BTree();
-		
-		return this.id;
+		this.gauche = new BTreeDoc();
+		this.droit = new BTreeDoc();
 	}	
 	
 	//Fonction de reequilibrage
@@ -93,32 +88,28 @@ public class BTree {
 	private void equilibrageGauche() {
 		// On sait que this.gauche n'est pas une feuille quand on appelle cette fonction
 		if (this.droit!=null)
-			this.droit = new BTree(this.t, this.ft, this.id, this.droit, this.gauche.droit);
+			this.droit = new BTreeDoc(this.t, this.frequence, this.droit, this.gauche.droit);
 		else {
 			this.droit.t = this.t;
-			this.droit.ft = this.ft;
-			this.droit.id = this.id;
+			this.droit.frequence = this.frequence;
 		}	
 		
 		this.t = this.gauche.t;
-		this.ft = this.gauche.ft;
-		this.id = this.gauche.id;
+		this.frequence = this.gauche.frequence;
 		this.gauche = this.gauche.gauche;				
 	}
 	
 	private void equilibrageDroite() {
 		// On sait que this.droit n'est pas une feuille quand on appelle cette fonction
 		if (this.gauche != null)
-			this.gauche = new BTree(this.t, this.ft, this.id, this.gauche, this.droit.gauche);
+			this.gauche = new BTreeDoc(this.t, this.frequence, this.gauche, this.droit.gauche);
 		else {
 			this.gauche.t = this.t;
-			this.gauche.ft = this.ft;
-			this.gauche.id = this.id;
+			this.gauche.frequence = this.frequence;
 		}	
 		
 		this.t = this.droit.t;
-		this.ft = this.droit.ft;
-		this.id = this.droit.id;
+		this.frequence = this.droit.frequence;
 		this.droit = this.droit.droit;			
 	}
 }
