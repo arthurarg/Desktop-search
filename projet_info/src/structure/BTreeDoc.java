@@ -13,7 +13,7 @@ public class BTreeDoc {
 		this.gauche = this.droit = null;
 	}
 	
-	public BTreeDoc(String t, int ft, BTreeDoc gauche, BTreeDoc droit) {
+	public BTreeDoc(String t, int frequence, BTreeDoc gauche, BTreeDoc droit) {
 		this.t = t;
 		this.frequence = frequence;
 		this.gauche = gauche ;
@@ -23,23 +23,42 @@ public class BTreeDoc {
 
 	// Insere un nouveau mot dans l'arbre
 	public void insererMot(String mot) { 
-		insererMot(mot, 1);
-	}
-	public void insererMot(String mot, int ft) {
 		if (isLeaf())
-			ajouterMot(mot,ft);
+			ajouterMot(mot);
 		else if (mot.compareTo(this.t) < 0) {
-			this.gauche.insererMot(mot,ft);
+			this.gauche.insererMot(mot);
 			if (this.gauche.size() > this.droit.size())
 				equilibrageGauche();
 		}
 		else if (mot.compareTo(this.t) > 0) {
-			this.droit.insererMot(mot,ft);
+			this.droit.insererMot(mot);
 			if (this.gauche.size() + 1 < this.droit.size())
 				equilibrageDroite();
 		}
 		else
 			this.frequence++;
+	}
+	
+	
+	// Attention, cette méthode de retrait n'assure pas la structure équilibrée de l'arbre !
+	// En effet, elle sera utilisée pour vider tout l'arbre, les insertions ayant été effectuées au préalable
+	// Opération ultime sur le BTreeDoc, aucune autre méthode autre que isLeaf() ne doit être appelée après le moindre appel à cette méthode
+	public Pair retirerMot() {
+		Pair p = null;
+		
+		if (this.t != null) {
+			p = new Pair(this.t, this.frequence);
+			this.t = null;
+			return p;
+		}
+		
+		if (this.gauche != null)
+			p = this.gauche.retirerMot();
+		
+		if (p==null && this.droit != null) // Cas ou il n'y a plus de mots à gauche et qu'il peut y en avoir à droite
+			p = this.droit.retirerMot();
+		
+		return p;
 	}
 	
 	
@@ -75,9 +94,9 @@ public class BTreeDoc {
 // Fonctions auxiliaires pour construire un BTree	
 //----------------------------------
 	//Update les champs lors de l'insertion
-	private void ajouterMot(String t, int ft) {
+	private void ajouterMot(String t) {
 		this.t = t;
-		this.frequence = ft;
+		this.frequence = 1;
 		//TODO est-ce vraiment genant d'avoir un étage de feuilles vides ?! modifiable facilement
 		this.gauche = new BTreeDoc();
 		this.droit = new BTreeDoc();
