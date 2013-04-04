@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import structure.BTree;
 import structure.BTreeDoc;
 import structure.Pair;
 
@@ -69,6 +70,22 @@ public class Lecture {
 			System.exit(1);
 		}
 		return tab;
+	}
+	
+	
+	public static BTree lireVocabulaire (String index) {
+		BTree vocabulaire = new BTree();
+		try {
+			BufferedReader f = new BufferedReader (new FileReader(index+"index/vocabulaire"));
+			vocabulaire.lireArbre(f);
+			f.close();
+		}
+		catch(Exception e) {
+			System.err.println("Impossible d'ouvrir le vocabulaire : " + e.getMessage());
+			//TODO supprimer toute trace de l'index via une méthode si ce dernier n'est pas utilisable ??
+			System.exit(1);
+		}	
+		return vocabulaire;
 	}
 	
 }

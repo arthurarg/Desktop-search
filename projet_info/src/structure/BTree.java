@@ -1,8 +1,13 @@
 package structure;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class BTree {
 	//Utilisé pour connaitre l'id du prochain mot
 	static int whats_the_id = 1;
+	public static final String NEW_LINE = System.getProperty("line.separator" );
 	
 	String t;
 	int ft;
@@ -62,7 +67,6 @@ public class BTree {
 		else
 			return Math.max(this.gauche.size(), this.droit.size()) +1;
 	}
-	public static final String NEW_LINE = System.getProperty("line.separator" );
 	public String toString() {
 		if (isLeaf())
 			return "";
@@ -120,5 +124,37 @@ public class BTree {
 		this.ft = this.droit.ft;
 		this.id = this.droit.id;
 		this.droit = this.droit.droit;			
+	}
+	
+//---------
+// Fonctions auxiliaires pour écrire/lire l'arbre sur le disque dur
+//---------
+	public void ecritureArbre (BufferedWriter f) throws IOException {
+		if (!this.isLeaf()) {
+			f.write("" + this.t + " " + this.ft + " " + this.id + NEW_LINE);
+			this.gauche.ecritureArbre(f);
+			this.droit.ecritureArbre(f);
+		}
+		if (this.isLeaf())
+			f.write("#" + NEW_LINE);
+	}
+	
+	public void lireArbre (BufferedReader f) throws IOException {
+		String s = f.readLine();
+		if (s== null) //Fin du dossier attend
+			return;
+		
+		if (s.equals("#")) //Cela reste une feuille
+			return;
+		
+		String[] data = s.split(" ");
+		this.t = data[0];
+		this.ft = Integer.parseInt(data[1]);
+		this.id = Integer.parseInt(data[2]);
+		this.gauche = new BTree();
+		this.droit = new BTree();
+		this.gauche.lireArbre(f);
+		this.droit.lireArbre(f);
+		
 	}
 }
