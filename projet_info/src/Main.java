@@ -2,7 +2,8 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
 
-import mode.*;
+import mode.Build;
+import mode.Query;
 
 public class Main {
 
@@ -25,25 +26,34 @@ public class Main {
 		
 			
 			if (args[i].matches("^--index-directory$") && isPathValid(args[i+1])) // cas ou l'option --index-directory est appele
-					indexDir = new File(args[i++]); // le chemin est enregistré dans le args suivant; i incrémenté pour éviter le traitement de l'args suivant	
+					indexDir = new File(args[++i]); // le chemin est enregistré dans le args suivant; i incrémenté pour éviter le traitement de l'args suivant	
 					
 			else if (args[i].matches("^--root$") && isPathValid(args[i+1])) // cas ou l'option --root est appelé
-				root.add(new File(args[i++]));
+				root.add(new File(args[++i]));
 			
 			else if (args[i].matches("^--accept$") && isRegexValid(args[i+1])) { // cas ou l'option --accept est appele
 				if (regex=="")
-					regex = args[i++];
+					regex = args[++i];
 				else
-					regex+= "|" + args[i++];
+					regex+= "|" + args[++i];
 			}
 			
 			else if (args[i].matches("^--max$"))// cas ou l'option --max est appele
-				n = Integer.parseInt(args[i++]);
+				n = Integer.parseInt(args[++i]);
 			
 			else  {// ce n'est pas une option, il y a un probleme
 				throw new IllegalArgumentException(args[i] + " isn't a valid option");
 			}
 		}
+		
+		
+		//TODO supprimer cet batterie de tests
+		for (File f : root) {
+			try { System.out.println(f.getCanonicalPath()); }
+			catch (Exception e) { System.err.print("wtf"); }
+		}
+		if (root.size()==0)
+			System.out.println("ok");
 		
 		//On s'intéresse au mode, stocké dans args[0]
 		if (args[0].equals("query"))
@@ -61,7 +71,7 @@ public class Main {
 
 	public static boolean isPathValid(String path) {
 		if (!new File(path).isDirectory()) 
-			throw new IllegalArgumentException (path + " is not a valid path");	
+			throw new IllegalArgumentException (path + " is not a valid path for a directory");	
 		return true;
 	}
 	
