@@ -25,4 +25,8 @@ public class Stockage {
 		c--;
 		return new Triplet(tab[c], tab[c+1], tab[c+2]);
 	}
+	
+	public boolean isEmpty(){
+		return c==0;
+	}
 }
