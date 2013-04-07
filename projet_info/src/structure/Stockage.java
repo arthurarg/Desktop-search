@@ -10,20 +10,23 @@ public class Stockage {
 		c=0;
 	}
 	
-	public void add(Triplet tr){
+	public boolean add(Triplet tr){
 		if(c>=LEN)
-			System.out.print("ERREUR");
-		tab[c]=tr.t;
-		tab[c+1]=tr.d;
-		tab[c+2]=tr.f;
+			return false;
+		
+		tab[3*c]=tr.t;
+		tab[3*c+1]=tr.d;
+		tab[3*c+2]=tr.f;
 		c++;
+		
+		return true;
 	}
 	
 	public Triplet get(){
 		if(c==0)
 			return null;
 		c--;
-		return new Triplet(tab[c], tab[c+1], tab[c+2]);
+		return new Triplet(tab[3*c], tab[3*c+1], tab[3*c+2]);
 	}
 	
 	public boolean isEmpty(){
