@@ -10,5 +10,9 @@ public class Triplet {
 		this.d = d;
 		this.f = f;
 	}
+	
+	public String toString(){
+		return "("+t+", "+d+", "+f+")";
+	}
 
 }
