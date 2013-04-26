@@ -56,12 +56,12 @@ public class Lecture {
 	}
 	
 	
-	public static Pair[] lireDocuments (String index) {
+	public static Pair[] lireDocuments (File index) {
 		
 		//Objet serializable : profitons en !
 		Pair[] tab = null;
 		try {
-			ObjectInputStream f = new ObjectInputStream(new FileInputStream(index+"index/documents"));
+			ObjectInputStream f = new ObjectInputStream(new FileInputStream(index.getCanonicalPath()+"index/documents"));
 			tab = (Pair[]) f.readObject();
 			f.close();
 		}

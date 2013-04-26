@@ -57,6 +57,27 @@ public class BTree {
 		}
 	}
 	
+	// Attention, cette méthode de retrait n'assure pas la structure équilibrée de l'arbre !
+	// En effet, elle sera utilisée pour vider tout l'arbre, les insertions ayant été effectuées au préalable
+	// Opération ultime sur le BTree, aucune autre méthode autre que isLeaf() ne doit être appelée après le moindre appel à cette méthode
+	public PairMot retirerMot() {
+		PairMot p = null;
+		
+		if (this.t != null) {
+			p = new PairMot(this.t, this.id); 
+			this.t = null;
+			return p;
+		}
+		
+		if (this.gauche != null)
+			p = this.gauche.retirerMot();
+		
+		if (p==null && this.droit != null) // Cas ou il n'y a plus de mots à gauche et qu'il peut y en avoir à droite
+			p = this.droit.retirerMot();
+		
+		return p;
+	}
+	
 	
 	public boolean isLeaf() {
 		return (this.t == null);

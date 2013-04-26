@@ -27,7 +27,7 @@ public class EcritureIndex {
 			file.write(tr.d+" "+tr.f+" ");
 			file.close();
 		}
-		catch(IOException e){
+		catch(IOException e) {
 			System.out.println("erreur lors de l'ajout de "+mot+" à l'index");
 		}
 	}

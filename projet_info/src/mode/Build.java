@@ -1,9 +1,9 @@
 package mode;
 
+import gestionIO.Ecriture;
 import gestionIO.Lecture;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import structure.BTree;
@@ -41,7 +41,7 @@ public class Build {
 		
 		//Stockage de Documents dans le tableau à partir de la LinkedList
 		if (l.size() == 0) {
-			System.out.println("ok");
+			System.out.println("ok"); // TODO supprimer ligne
 			return;
 		}
 
@@ -86,5 +86,8 @@ public class Build {
 			//TODO
 			System.out.println("réussie!");
 		}
+		//TODO remplacer tous les i.txt en string.txt ??
+		//Ecris la liste des documents, indexes par numero, avec leur score Wd
+		Ecriture.ecrireDocuments(index,listeDocuments);
 	}
 }
