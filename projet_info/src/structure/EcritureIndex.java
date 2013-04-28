@@ -12,23 +12,33 @@ public class EcritureIndex {
 		String path=f.getAbsolutePath()+"\\mots\\";
 		
 		Triplet tr;
-		String mot;
 		while(!s.isEmpty()){
 			tr=s.get();
-			mot="";// name=voc.getWord(tr.t);
-			ajouter(mot, tr, path);
+			ajouter(tr, path);
 		}
 	}
 	
-	static void ajouter(String mot, Triplet tr, String path){
+	static void ajouter(Triplet tr, String path){
 		// on ajoute au fichier "mot" le couple (d, f)
 		try{
-			FileWriter file = new FileWriter(path+mot+".txt", true);
+			FileWriter file = new FileWriter(path+tr.t+".txt", true);
 			file.write(tr.d+" "+tr.f+" ");
 			file.close();
 		}
 		catch(IOException e) {
-			System.out.println("erreur lors de l'ajout de "+mot+" à l'index");
+			System.out.println("erreur lors de l'ajout de "+tr.t+".txt à l'index");
+		}
+	}
+	
+	static void conversionId(BTree voc, String path){
+		if(voc!=null){
+			File id;
+			PairMot p=voc.retirerMot();
+			while(p!=null){
+				id=new File(path+p.id+".txt");
+				id.renameTo(new File(path+p.mot+".txt"));
+				p=voc.retirerMot();
+			}
 		}
 	}
 }

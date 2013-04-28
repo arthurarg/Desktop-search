@@ -2,7 +2,7 @@ package structure;
 
 public class Triplet {
 	
-	public int t, d, f;
+	public int t, d, f; // t term, d document, f frequency
 
 	public Triplet(int t, int d, int f) {
 		super();
