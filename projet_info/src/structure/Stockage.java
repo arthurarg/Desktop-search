@@ -1,7 +1,7 @@
 package structure;
 
 public class Stockage {
-	private final int LEN=2;
+	private final int LEN=100;
 	int[] tab;
 	int c;
 	int cGet;
@@ -14,16 +14,20 @@ public class Stockage {
 	}
 	
 	public boolean add(Triplet tr){
+		return add(tr.t, tr.d, tr.f);
+	}
+	
+	public boolean add(int t, int d, int f){
 		if(c>=LEN)
 			return false;
 		
-		tab[3*c]=tr.t;
-		tab[3*c+1]=tr.d;
-		tab[3*c+2]=tr.f;
+		tab[3*c]=t;
+		tab[3*c+1]=d;
+		tab[3*c+2]=f;
 		c++;
 		
 		return true;
-	}
+	}	
 	
 	public Triplet get(){
 		if(c==0)

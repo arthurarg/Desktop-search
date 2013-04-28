@@ -8,8 +8,10 @@ import java.util.LinkedList;
 
 import structure.BTree;
 import structure.BTreeDoc;
+import structure.EcritureIndex;
 import structure.Pair;
 import structure.PairDoc;
+import structure.Stockage;
 
 public class Build {
 
@@ -62,6 +64,7 @@ public class Build {
 		BTreeDoc donnees;
 		
 		//Indexation de tous les documents
+		Stockage triplets=new Stockage();
 		for (int d = 0; d < listeDocuments.length; d++) {
 			System.out.println("Indexation du fichier " + listeDocuments[d].getPath() + " ... ");
 			//Récupère tout le vocabulaire du document dans un BTreeDoc
@@ -70,12 +73,13 @@ public class Build {
 			
 			//Réinjecte donnees dans le BTree de vocabulaire total, tout en creant un flux de triplets
 			Pair tmp;
+			
 			while ((tmp = donnees.retirerMot()) != null) { //retire un élement du BTreeDoc sous forme de paire	
 				//TODO tester puis supprimer	
 				System.out.println(tmp.getMot());
 				int t = vocabulaire.insererMot(tmp.getMot()); // insertion dans le vocabulaire
 				//Triplet formé par (insererMot(tmp.string),d,tmp.frequency)
-				//TODO a implementer -- > Stockage.ajouter(t,d,tmp.getFrequence());
+				triplets.add(t,d, (int)tmp.getFrequence());
 				//TODO
 				//TODO
 			}
@@ -86,7 +90,13 @@ public class Build {
 			//TODO
 			System.out.println("réussie!");
 		}
-		//TODO remplacer tous les i.txt en string.txt ??
+		
+		// ecrit l'index dans le dossier "mots"
+		EcritureIndex.creation(triplets, index);
+		
+		// convertit id.txt en mot.txt
+		EcritureIndex.conversionId(vocabulaire, index);
+		
 		//Ecris la liste des documents, indexes par numero, avec leur score Wd
 		Ecriture.ecrireDocuments(index,listeDocuments);
 	}

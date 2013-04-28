@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class EcritureIndex {
 	
-	public static void creation(Stockage s, BTree voc, File indexDir){
+	public static void creation(Stockage s, File indexDir){
 		// creation du dossier mots
 		File f=new File(indexDir, "mots");
 		f.mkdir();
@@ -30,14 +30,16 @@ public class EcritureIndex {
 		}
 	}
 	
-	static void conversionId(BTree voc, String path){
+	public static void conversionId(BTree voc, File indexDir){
 		if(voc!=null){
+			String path=indexDir.getAbsolutePath()+"\\mots\\";
+			
 			File id;
-			PairMot p=voc.retirerMot();
-			while(p!=null){
+			PairMot p;
+			
+			while((p=voc.retirerMot())!=null){
 				id=new File(path+p.id+".txt");
 				id.renameTo(new File(path+p.mot+".txt"));
-				p=voc.retirerMot();
 			}
 		}
 	}

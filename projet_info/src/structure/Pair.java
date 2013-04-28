@@ -12,7 +12,7 @@ public class Pair {
 	public String getMot() {
 		return this.mot;
 	}
-	public double getFrequence() {
+	public int getFrequence() {
 		return this.frequence;
 	}
 }
