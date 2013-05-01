@@ -4,6 +4,7 @@ import gestionIO.Ecriture;
 import gestionIO.Lecture;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import structure.BTree;
@@ -12,6 +13,7 @@ import structure.EcritureIndex;
 import structure.Pair;
 import structure.PairDoc;
 import structure.Stockage;
+import structure.StructureStockage;
 
 public class Build {
 
@@ -20,8 +22,7 @@ public class Build {
 //-------		
 //Recense tous les documents à indexer dans ListeDocuments
 //-------
-		LinkedList<String> l = new LinkedList<String>();
-		//Parcours les dossiers root et leurs sous-dossiers
+		LinkedList<String> l = new LinkedList<String>();//Parcours les dossiers root et leurs sous-dossiers
 		while (!root.isEmpty()) {
 			File[] temp = root.poll().listFiles();
 			
@@ -64,7 +65,7 @@ public class Build {
 		BTreeDoc donnees;
 		
 		//Indexation de tous les documents
-		Stockage triplets=new Stockage();
+		StructureStockage triplets=new StructureStockage();
 		for (int d = 0; d < listeDocuments.length; d++) {
 			System.out.println("Indexation du fichier " + listeDocuments[d].getPath() + " ... ");
 			//Récupère tout le vocabulaire du document dans un BTreeDoc
@@ -92,10 +93,14 @@ public class Build {
 		}
 		
 		// ecrit l'index dans le dossier "mots"
+		System.out.println("ecriture de l'index");
 		EcritureIndex.creation(triplets, index);
+		System.out.println("réussie!");
 		
 		// convertit id.txt en mot.txt
+		System.out.println("conversion");
 		EcritureIndex.conversionId(vocabulaire, index);
+		System.out.println("réussie!");
 		
 		//Ecris la liste des documents, indexes par numero, avec leur score Wd
 		Ecriture.ecrireDocuments(index,listeDocuments);

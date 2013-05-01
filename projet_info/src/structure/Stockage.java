@@ -43,7 +43,9 @@ public class Stockage {
 	}
 	
 	public boolean isEmpty(){
-		return c==0;
+		if(c==0 || cGet>=c)
+			return true;
+		else return false;
 	}
 	
 	public String toString(){
@@ -55,5 +57,9 @@ public class Stockage {
 		for(int i=cGet+1;i<c;i++)
 			s=s+", "+"("+tab[3*i]+", "+tab[3*i+1]+", "+tab[3*i+2]+")";
 		return s;
+	}
+	
+	public void aff(){
+		System.out.println(this);
 	}
 }

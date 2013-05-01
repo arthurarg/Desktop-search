@@ -31,6 +31,17 @@ public class StructureStockage {
 		}
 	}
 	
+	public void add(int t, int d, int f){
+		if(!current.c.add(t, d, f)){
+			current.n=new Bloc();
+			current.n.p=current;
+			current=current.n;
+			if(start.n==null)
+				start.n=current;
+			current.c.add(t, d, f);
+		}
+	}
+	
 	public Triplet get(){
 		if(start==null)
 			return null;
@@ -45,6 +56,21 @@ public class StructureStockage {
 		start=start.n;
 		
 		return get();
+	}
+	
+	public boolean isEmpty(){
+		if(start==null)
+			return true;
+		
+		boolean isStartEmpty=start.c.isEmpty();
+		
+		if(!isStartEmpty)
+			return false;
+		
+		if(start.n==null)
+			return true;
+		
+		return start.n.c.isEmpty();
 	}
 	
 	public String toString(){
