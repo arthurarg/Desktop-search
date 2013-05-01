@@ -11,18 +11,19 @@ public class EcritureIndex {
 		f.mkdir();
 		String path=f.getAbsolutePath()+"\\";
 		
-		Triplet tr;
+		Triplet tr;int i=0;
 		while(!s.isEmpty()){
 			tr=s.get();
-			ajouter(tr, path);
+			ajouter(tr, path);i++;
 		}
+		System.out.println(i+" fichiers créés");
 	}
 	
 	static void ajouter(Triplet tr, String path){
 		// on ajoute au fichier "mot" le couple (d, f)
 		if(tr!=null){
 			try{
-				System.out.print("ajout de "+tr.t+".txt à l'index : ");
+				System.out.println("ajout de "+tr.t+".txt à l'index");
 				FileWriter file = new FileWriter(path+tr.t+".txt", true);
 				file.write(tr.d+" "+tr.f+" ");
 				file.close();
@@ -41,11 +42,13 @@ public class EcritureIndex {
 			File id;
 			PairMot p;
 			
+			int i=0;
 			while((p=voc.retirerMot())!=null){
 				System.out.println(p.id+" -> "+p.mot);
 				id=new File(path+p.id+".txt");
-				id.renameTo(new File(path+p.mot+".txt"));
+				id.renameTo(new File(path+p.mot+".txt"));i++;
 			}
+			System.out.println(i+" fichiers renommés");
 		}
 	}
 }
