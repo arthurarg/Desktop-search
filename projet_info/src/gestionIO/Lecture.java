@@ -61,12 +61,12 @@ public class Lecture {
 		//Objet serializable : profitons en !
 		PairDoc[] tab = null;
 		try {
-			ObjectInputStream f = new ObjectInputStream(new FileInputStream(index.getCanonicalPath()+"index/documents"));
+			ObjectInputStream f = new ObjectInputStream(new FileInputStream(index.getCanonicalPath()+"/index/documents"));
 			tab = (PairDoc[]) f.readObject();
 			f.close();
 		}
 		catch(Exception e) {
-			System.err.println("Impossible d'ouvrir la liste des documents indéxés : " + e.getMessage());
+			System.err.println("Impossible d'ouvrir la liste des documents indexés : " + e.getMessage());
 			System.exit(1);
 		}
 		return tab;

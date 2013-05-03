@@ -17,15 +17,18 @@ public class Query {
 		Scanner sc = new Scanner(System.in);
 
 		PairDoc[] documents = Lecture.lireDocuments(index);
-		double[] scores = new double[documents.length];
+		double[] scores;
 		
 		while (continuer) {
+			//(Re)initialisation des scores
+			scores = new double[documents.length];
+			
 			if (sc.hasNext()) {//TODO dans quel cas s'arrète-t-on ?
 				String[] mots = sc.next().split(" "); 
 				
 				//Traite chaque mot de la recherche
 				for (int j = 0; j < mots.length; j++) {
-					File f = new File(index.getAbsolutePath() + "/mots/" + mots[j] + ".txt");
+					File f = new File(index.getAbsolutePath() + "/index/mots/" + mots[j] + ".txt");
 					System.out.println(index.getAbsolutePath());
 					if (f.exists()) {
 						System.out.println("ok");
@@ -55,19 +58,10 @@ public class Query {
 				}
 				
 				int[] resultats = renvoiIndicesMax(scores,n);
-				int nbResultats=0;
-				for (int l = 0; l < resultats.length; l++) {
-					if (scores[l] != 0)
-						nbResultats++;
-				}
-				if (nbResultats > 0)
-					System.out.println(nbResultats + " résultat(s) pertinent(s) trouvé(s)");
-				else
-					System.out.println("Aucun résultat pertinent trouvé");
 				
 				for (int l = 0; l < resultats.length; l++) {
-					if (scores[l] != 0)//TODO prise de decision : on affiche les meilleurs resultats s'ils sont non nuls
-							System.out.println(documents[l].getPath());
+					if (scores[resultats[l]] != 0)
+						System.out.println(documents[resultats[l]].getPath());
 				}
 			}
 		}		

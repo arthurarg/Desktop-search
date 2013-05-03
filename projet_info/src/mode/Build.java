@@ -18,6 +18,10 @@ import structure.StructureStockage;
 public class Build {
 
 	public static void build(File index, LinkedList<File> root, String regex) {
+//-------
+//TODO Supprime l'index s'ile xiste deja
+//-------
+		
 		
 //-------		
 //Recense tous les documents à indexer dans ListeDocuments
@@ -92,7 +96,7 @@ public class Build {
 			System.out.println("réussie!");
 		}
 		
-		// ecrit l'index dans le dossier "mots"
+		// Ecrit l'index dans le dossier "mots"
 		System.out.println("ecriture de l'index");
 		EcritureIndex.creation(triplets, index);
 		System.out.println("réussie!");

@@ -7,7 +7,7 @@ public class EcritureIndex {
 	
 	public static void creation(StructureStockage s, File indexDir){
 		// creation du dossier mots
-		File f=new File(indexDir, "index/mots");
+		File f=new File(indexDir, "index/mots/");
 		f.mkdir();
 		String path=f.getAbsolutePath()+"/";
 		
@@ -24,6 +24,7 @@ public class EcritureIndex {
 		if(tr!=null){
 			try{
 				System.out.println("ajout de "+tr.t+".txt à l'index");
+				System.out.println(path+tr.t+".txt");
 				FileWriter file = new FileWriter(path+tr.t+".txt", true);
 				file.write(tr.d+" "+tr.f+" ");
 				file.close();
@@ -36,7 +37,7 @@ public class EcritureIndex {
 	
 	public static void conversionId(BTree voc, File indexDir){
 		if(voc!=null){
-			String path=indexDir.getAbsolutePath()+"/mots/";
+			String path=indexDir.getAbsolutePath()+"/index/mots/";
 			System.out.println("path "+path);
 			
 			File id;
