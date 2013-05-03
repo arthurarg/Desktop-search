@@ -16,7 +16,7 @@ public class Ecriture {
 	public static void ecrireDocuments (File index, PairDoc[] documents) {
 		//Cree le dossier qui va bien
 		try {
-			File indexFolder = new File(index.getCanonicalPath() + "index");
+			File indexFolder = new File(index.getCanonicalPath() + "/index");
 			if (!indexFolder.exists())
 				indexFolder.mkdir();}
 		catch (Exception ex1) {}
@@ -26,12 +26,12 @@ public class Ecriture {
 		
 		//Objet serializable : profitons en !
 		try {
-			ObjectOutputStream f = new ObjectOutputStream(new FileOutputStream(index.getCanonicalPath()+"index/documents"));
+			ObjectOutputStream f = new ObjectOutputStream(new FileOutputStream(index.getCanonicalPath()+"/index/documents"));
 			f.writeObject(documents);
 			f.close();
 		}
 		catch(Exception ex2) {
-			System.err.println("Impossible d'enregistrer la liste des documents indéxés : " + ex2.getMessage());
+			System.err.println("Impossible d'enregistrer la liste des documents indexés : " + ex2.getMessage());
 			//TODO supprimer toute trace de l'index via une méthode si ce dernier n'est pas utilisable ??
 			System.exit(1);
 		}

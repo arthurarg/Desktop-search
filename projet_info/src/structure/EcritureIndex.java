@@ -7,9 +7,9 @@ public class EcritureIndex {
 	
 	public static void creation(StructureStockage s, File indexDir){
 		// creation du dossier mots
-		File f=new File(indexDir, "mots");
+		File f=new File(indexDir, "index/mots");
 		f.mkdir();
-		String path=f.getAbsolutePath()+"\\";
+		String path=f.getAbsolutePath()+"/";
 		
 		Triplet tr;int i=0;
 		while(!s.isEmpty()){
@@ -36,7 +36,7 @@ public class EcritureIndex {
 	
 	public static void conversionId(BTree voc, File indexDir){
 		if(voc!=null){
-			String path=indexDir.getAbsolutePath()+"\\mots\\";
+			String path=indexDir.getAbsolutePath()+"/mots/";
 			System.out.println("path "+path);
 			
 			File id;

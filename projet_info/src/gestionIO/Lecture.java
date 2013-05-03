@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 
 import structure.BTree;
 import structure.BTreeDoc;
-import structure.Pair;
+import structure.PairDoc;
 
 public class Lecture {
 
@@ -56,13 +56,13 @@ public class Lecture {
 	}
 	
 	
-	public static Pair[] lireDocuments (File index) {
+	public static PairDoc[] lireDocuments (File index) {
 		
 		//Objet serializable : profitons en !
-		Pair[] tab = null;
+		PairDoc[] tab = null;
 		try {
 			ObjectInputStream f = new ObjectInputStream(new FileInputStream(index.getCanonicalPath()+"index/documents"));
-			tab = (Pair[]) f.readObject();
+			tab = (PairDoc[]) f.readObject();
 			f.close();
 		}
 		catch(Exception e) {
