@@ -7,8 +7,13 @@ public class EcritureIndex {
 	
 	public static void creation(StructureStockage s, File indexDir){
 		// creation du dossier mots
-		File f=new File(indexDir, "index/mots/");
-		f.mkdir();
+		System.out.print("Creation du dossier mot : ");
+		File f=new File(indexDir.getAbsolutePath() + "/index/mots/");
+		if (f.mkdir())
+			System.out.println("réussie");
+		else
+			System.out.println("echec");
+
 		String path=f.getAbsolutePath()+"/";
 		
 		Triplet tr;int i=0;

@@ -13,7 +13,7 @@ public class Main {
 		//Si --root non précisé en mode build, on envoie une liste chaînée vide
 		//TODO Si --index-directory non precise, on prend le repertoire depuis lequel le programme est execute
 		File indexDir = new File(System.getProperty("user.dir"));
-		String regex = "";
+		String regex = ".*";
 		LinkedList<File> root = new LinkedList<File> ();
 		//Par defaut, on affiche les 10 résultats les plus pertinents
 		int n = 10; 
@@ -44,7 +44,8 @@ public class Main {
 			}
 		}
 		
-
+		if (args.length < 1)
+			throw new IllegalArgumentException ("You have to precise a mode. Existing modes : build or query");
 		
 		//On s'intéresse au mode, stocké dans args[0]
 		if (args[0].equals("query"))

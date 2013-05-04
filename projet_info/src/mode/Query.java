@@ -10,7 +10,7 @@ import java.util.Scanner;
 import structure.PairDoc;
 
 public class Query {
-
+//TODO verifier que cela fonctionne vraiment (résultats parfois différents)
 	
 	public static void query(File index, int n) {
 		boolean continuer = true;
@@ -23,45 +23,46 @@ public class Query {
 			//(Re)initialisation des scores
 			scores = new double[documents.length];
 			
-			if (sc.hasNext()) {//TODO dans quel cas s'arrète-t-on ?
-				String[] mots = sc.next().split(" "); 
-				
-				//Traite chaque mot de la recherche
-				for (int j = 0; j < mots.length; j++) {
-					File f = new File(index.getAbsolutePath() + "/index/mots/" + mots[j] + ".txt");
-					System.out.println(index.getAbsolutePath());
-					if (f.exists()) {
-						System.out.println("ok");
-						try {
-							BufferedReader in = new BufferedReader(new FileReader(f));
-							// On lit la seule ligne du fichier
-							String[] donnees = in.readLine().split(" ");
+			//TODO dans quel cas s'arrète-t-on ?
+			System.out.println("Entrez les mots que vous recherchez");
+			String[] mots = sc.next().split(" "); 
+			
+			//Traite chaque mot de la recherche
+			for (int j = 0; j < mots.length; j++) {
+				File f = new File(index.getAbsolutePath() + "/index/mots/" + mots[j] + ".txt");
+
+				if (f.exists()) {
+					
+					try {
+						BufferedReader in = new BufferedReader(new FileReader(f));
+						// On lit la seule ligne du fichier
+						String[] donnees = in.readLine().split(" ");
+						
+						for (int k = 0; k < donnees.length; k+=2) {
+							//Indice k : numéro du document, indice k+1 : frequence du mot dans ce document
+							scores[Integer.parseInt(donnees[k])] += Math.log(1 + (2*(double)documents.length)/((double)donnees.length))
+																			*(1 + Math.log(Double.parseDouble(donnees[k+1])));
+							//TODO vérifier formule; le facteur 2 vient du fait que donnees contient deux chiffres (n° doc, frequence)
 							
-							for (int k = 0; k < donnees.length; k+=2) {
-								//Indice k : numéro du document, indice k+1 : frequence du mot dans ce document
-								scores[Integer.parseInt(donnees[k])] += Math.log(1 + (2*(double)documents.length)/((double)donnees.length))
-																				*(1 + Math.log(Double.parseDouble(donnees[k+1])));
-								//TODO vérifier formule; le facteur 2 vient du fait que donnees contient deux chiffres (n° doc, frequence)
-								
-							}
-							//Normalisaton en divisant par wd TODO verifier calcu wd, on diviser par le carré ou pas ??
-							for (int l = 0; l < scores.length; l++) {
-								scores[l] /= documents[l].getWd();
-								System.out.println(scores[l]);
-							}
-							
-							//fermeture de la source de lecture
-							in.close();
 						}
-						catch (Exception e) { System.out.println("File not found : " + e.getMessage());}	
+						//Normalisaton en divisant par wd TODO verifier calcu wd, on diviser par le carré ou pas ??
+						for (int l = 0; l < scores.length; l++) {
+							scores[l] /= documents[l].getWd();
+							System.out.println(scores[l]);
+						}
+						
+						//fermeture de la source de lecture
+						in.close();
 					}
+					catch (Exception e) { System.out.println("File not found : " + e.getMessage());}	
 				}
+			
 				
 				int[] resultats = renvoiIndicesMax(scores,n);
 				
 				for (int l = 0; l < resultats.length; l++) {
 					if (scores[resultats[l]] != 0)
-						System.out.println(documents[resultats[l]].getPath());
+						System.out.println("hih" +documents[resultats[l]].getPath());
 				}
 			}
 		}		

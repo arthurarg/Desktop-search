@@ -18,7 +18,7 @@ public class Test {
 		//Test le mode build sur un minuscule échantillon
 		//TestBuildFacile();
 		//Test le mode query sur un minuscule échantillon
-		TestQueryFacile();
+		//TestQueryFacile();
 	}
 
 	public static void TestBTree() {

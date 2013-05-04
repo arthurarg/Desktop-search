@@ -19,8 +19,12 @@ public class Build {
 
 	public static void build(File index, LinkedList<File> root, String regex) {
 //-------
-//TODO Supprime l'index s'ile xiste deja
+//TODO Supprime l'index s'il existe deja
 //-------
+		if (new File(index.getAbsolutePath() + "/index/").exists())
+			new File(index.getAbsolutePath() + "/index/").delete();
+		
+		new File(index.getAbsolutePath() + "/index/").mkdir();
 		
 		
 //-------		
@@ -34,7 +38,7 @@ public class Build {
 			if (temp!= null) {
 				for (int i=0; i<temp.length;i++) {
 					try {
-						if (temp[i].isFile() ) // Tout dossier "normal" sera indéxé
+						if (temp[i].isFile() && temp[i].getCanonicalPath().matches(regex)) // Tout dossier "normal" sera indéxé
 							l.add(temp[i].getCanonicalPath());
 						else if (temp[i].isDirectory()) // On parcourt les sous-dossiers
 							root.add(temp[i]);
