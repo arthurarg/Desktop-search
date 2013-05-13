@@ -21,6 +21,14 @@ import structure.ThreadLecture;
 public class Build {
 
 	public static void build(File index, LinkedList<File> root, String regex) {
+//-------
+//TODO Supprime l'index s'il existe deja
+//-------
+		if (new File(index.getAbsolutePath() + "/index/").exists())
+			new File(index.getAbsolutePath() + "/index/").delete();
+		
+		new File(index.getAbsolutePath() + "/index/").mkdir();
+		
 		
 //-------		
 //Recense tous les documents à indexer dans ListeDocuments
@@ -33,7 +41,7 @@ public class Build {
 			if (temp!= null) {
 				for (int i=0; i<temp.length;i++) {
 					try {
-						if (temp[i].isFile() ) // Tout dossier "normal" sera indéxé
+						if (temp[i].isFile() && temp[i].getCanonicalPath().matches(regex)) // Tout dossier "normal" sera indéxé
 							l.add(temp[i].getCanonicalPath());
 						else if (temp[i].isDirectory()) // On parcourt les sous-dossiers
 							root.add(temp[i]);
@@ -80,13 +88,11 @@ public class Build {
 		// ecrit l'index dans le dossier "mots"
 		System.out.println("ecriture de l'index");
 		ecriture.start();
+		
 		//EcritureIndex.creation(triplets, index);
 		System.out.println("réussie!");
-		
-		
-		
 		//Ecris la liste des documents, indexes par numero, avec leur score Wd
-		//Ecriture.ecrireDocuments(index,listeDocuments);
+		Ecriture.ecrireDocuments(index,listeDocuments);
 	}
 	
 	public static void CreationBTree(PairDoc[] listeDocuments,
@@ -116,5 +122,6 @@ public class Build {
 			//TODO
 			//TODO
 		}
+		
 	}
 }

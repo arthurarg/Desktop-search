@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 
 import structure.BTree;
 import structure.BTreeDoc;
-import structure.Pair;
+import structure.PairDoc;
 
 public class Lecture {
 
@@ -56,17 +56,17 @@ public class Lecture {
 	}
 	
 	
-	public static Pair[] lireDocuments (File index) {
+	public static PairDoc[] lireDocuments (File index) {
 		
 		//Objet serializable : profitons en !
-		Pair[] tab = null;
+		PairDoc[] tab = null;
 		try {
-			ObjectInputStream f = new ObjectInputStream(new FileInputStream(index.getCanonicalPath()+"index/documents"));
-			tab = (Pair[]) f.readObject();
+			ObjectInputStream f = new ObjectInputStream(new FileInputStream(index.getCanonicalPath()+"/index/documents"));
+			tab = (PairDoc[]) f.readObject();
 			f.close();
 		}
 		catch(Exception e) {
-			System.err.println("Impossible d'ouvrir la liste des documents indéxés : " + e.getMessage());
+			System.err.println("Impossible d'ouvrir la liste des documents indexés : " + e.getMessage());
 			System.exit(1);
 		}
 		return tab;

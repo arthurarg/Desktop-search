@@ -7,6 +7,7 @@ public class EcritureIndex {
 	
 	public static void creation(StructureStockage s, File indexDir){
 		// creation du dossier mots
+
 		File f=new File(indexDir, "mots");
 		try{
 			deleteFolder(f);
@@ -27,7 +28,10 @@ public class EcritureIndex {
 		// on ajoute au fichier "mot" le couple (d, f)
 		if(tr!=null){
 			try{
-				System.out.println("ajout de "+tr.d+" à "+tr.t+".txt");
+
+				System.out.println("ajout de "+tr.t+".txt à l'index");
+				System.out.println(path+tr.t+".txt");
+
 				FileWriter file = new FileWriter(path+tr.t+".txt", true);
 				file.write(tr.d+" "+tr.f+" ");
 				file.close();
@@ -40,7 +44,9 @@ public class EcritureIndex {
 	
 	public static void conversionId(BTree voc, File indexDir){
 		if(voc!=null){
+
 			String path=indexDir.getAbsolutePath()+"/mots/";
+
 			
 			File id;
 			PairMot p;
