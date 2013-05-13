@@ -7,8 +7,10 @@ public class EcritureIndex {
 	
 	public static void creation(StructureStockage s, File indexDir){
 		// creation du dossier mots
+		
 
-		File f=new File(indexDir, "mots");
+
+		File f=new File(new File(indexDir,"index"), "mots");
 		try{
 			deleteFolder(f);
 		}catch(IOException e){
@@ -45,7 +47,7 @@ public class EcritureIndex {
 	public static void conversionId(BTree voc, File indexDir){
 		if(voc!=null){
 
-			String path=indexDir.getAbsolutePath()+"/mots/";
+			String path=indexDir.getAbsolutePath()+"/index/mots/";
 
 			
 			File id;

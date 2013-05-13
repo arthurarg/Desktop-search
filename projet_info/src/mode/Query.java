@@ -48,7 +48,7 @@ public class Query {
 						//Normalisaton en divisant par wd TODO verifier calcu wd, on diviser par le carré ou pas ??
 						for (int l = 0; l < scores.length; l++) {
 							scores[l] /= documents[l].getWd();
-							System.out.println(scores[l]);
+							System.out.println("" + documents[l].getWd() + "score " + scores[l]);
 						}
 						
 						//fermeture de la source de lecture

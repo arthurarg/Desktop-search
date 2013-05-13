@@ -23,7 +23,7 @@ public class ThreadEcriture implements Runnable{
 	
 	@Override
 	public void run() {
-		File f=new File(index, "mots");
+		File f=new File(new File(index,"index"), "mots");
 		try{
 			EcritureIndex.deleteFolder(f);
 		}catch(IOException e){

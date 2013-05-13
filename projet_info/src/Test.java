@@ -18,7 +18,7 @@ public class Test {
 		//Test le mode build sur un minuscule échantillon
 		//TestBuildFacile();
 		//Test le mode query sur un minuscule échantillon
-		//TestQueryFacile();
+		TestQueryFacile();
 	}
 
 	public static void TestBTree() {
@@ -43,7 +43,7 @@ public class Test {
 	
 	public static void TestQueryFacile() {
 		// Chemin à  modifier sur chaque machine
-		String index = "/Users/jean-maxime/Documents/Informatique/Git/projet_info/projet_info/fichierstests/";
+		String index = "C:/Users/Arthur/Desktop/";
 		String[] arguments = ("query --index-directory " + index + " --max 5").split(" ");
 		Main.main(arguments);
 	}
