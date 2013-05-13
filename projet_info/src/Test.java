@@ -1,6 +1,6 @@
-import mode.Query;
 import gestionIO.Ecriture;
 import gestionIO.Lecture;
+import mode.Query;
 import structure.BTree;
 
 
@@ -43,7 +43,7 @@ public class Test {
 	
 	public static void TestQueryFacile() {
 		// Chemin à  modifier sur chaque machine
-		String index = "C:/Users/Arthur/Desktop/";
+		String index = "/Users/jean-maxime/Documents/Informatique/Git/projet_info/projet_info/fichierstests/";
 		String[] arguments = ("query --index-directory " + index + " --max 5").split(" ");
 		Main.main(arguments);
 	}

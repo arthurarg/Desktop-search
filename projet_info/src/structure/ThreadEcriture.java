@@ -1,7 +1,5 @@
 package structure;
 
-import gestionIO.Lecture;
-
 import java.io.File;
 import java.io.IOException;
 

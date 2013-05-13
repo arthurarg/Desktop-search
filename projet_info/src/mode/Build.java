@@ -4,17 +4,14 @@ import gestionIO.Ecriture;
 import gestionIO.Lecture;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 
 import structure.BTree;
 import structure.BTreeDoc;
-import structure.EcritureIndex;
+import structure.Bool;
 import structure.Pair;
 import structure.PairDoc;
-import structure.Stockage;
 import structure.StructureStockage;
-import structure.Bool;
 import structure.ThreadEcriture;
 import structure.ThreadLecture;
 
@@ -76,8 +73,7 @@ public class Build {
 		StructureStockage triplets=new StructureStockage();
 		Bool boolThread=new Bool(false);
 		
-		Thread lecture=new Thread(new ThreadLecture(boolThread, listeDocuments,
-				vocabulaire, triplets));
+		Thread lecture=new Thread(new ThreadLecture(boolThread, listeDocuments, index, vocabulaire, triplets));
 		Thread ecriture=new Thread(new ThreadEcriture(boolThread, triplets, index, vocabulaire));
 		
 		System.out.println("création du BTree");
@@ -91,11 +87,10 @@ public class Build {
 		
 		//EcritureIndex.creation(triplets, index);
 		System.out.println("réussie!");
-		//Ecris la liste des documents, indexes par numero, avec leur score Wd
-		Ecriture.ecrireDocuments(index,listeDocuments);
+
 	}
 	
-	public static void CreationBTree(PairDoc[] listeDocuments,
+	public static void CreationBTree(PairDoc[] listeDocuments, File index,
 			BTree vocabulaire, StructureStockage triplets) throws InterruptedException{
 		
 		BTreeDoc donnees;
@@ -104,6 +99,7 @@ public class Build {
 			//Récupère tout le vocabulaire du document dans un BTreeDoc
 			donnees = Lecture.analyserDocument(new File(listeDocuments[d].getPath()));
 			listeDocuments[d].setWd(donnees.calculWd());
+			System.out.println("YEAAAAH" + donnees.calculWd());
 			
 			//Réinjecte donnees dans le BTree de vocabulaire total, tout en creant un flux de triplets
 			Pair tmp;
@@ -116,12 +112,16 @@ public class Build {
 				triplets.add(t,d, (int)tmp.getFrequence());
 				Thread.sleep(1);
 			}
+
 			donnees = null; //Libération de la mémoire prise par le vocabulaire du document
 			
 			//TODO si on veut sauvegarder un run, c'est ici (vocabulaire à jour car update du nouveau document)
 			//TODO
 			//TODO
 		}
+		//Ecris la liste des documents, indexes par numero, avec leur score Wd
+		Ecriture.ecrireDocuments(index,listeDocuments);
 		
 	}
+
 }

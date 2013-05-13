@@ -9,9 +9,7 @@ import java.util.Scanner;
 
 import structure.PairDoc;
 
-public class Query {
-//TODO verifier que cela fonctionne vraiment (résultats parfois différents)
-	
+public class Query {	
 	public static void query(File index, int n) {
 		boolean continuer = true;
 		Scanner sc = new Scanner(System.in);
@@ -45,11 +43,10 @@ public class Query {
 							//TODO vérifier formule; le facteur 2 vient du fait que donnees contient deux chiffres (n° doc, frequence)
 							
 						}
-						//Normalisaton en divisant par wd TODO verifier calcu wd, on diviser par le carré ou pas ??
-						for (int l = 0; l < scores.length; l++) {
+						//Normalisaton en divisant par wd
+						for (int l = 0; l < scores.length; l++)
 							scores[l] /= documents[l].getWd();
-							System.out.println("" + documents[l].getWd() + "score " + scores[l]);
-						}
+						
 						
 						//fermeture de la source de lecture
 						in.close();
@@ -60,9 +57,10 @@ public class Query {
 				
 				int[] resultats = renvoiIndicesMax(scores,n);
 				
+				System.out.println("Resultats pertinents : ");
 				for (int l = 0; l < resultats.length; l++) {
 					if (scores[resultats[l]] != 0)
-						System.out.println("hih" +documents[resultats[l]].getPath());
+						System.out.println(documents[resultats[l]].getPath());
 				}
 			}
 		}		

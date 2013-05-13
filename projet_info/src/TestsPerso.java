@@ -1,12 +1,8 @@
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Stack;
 
 import structure.BTree;
-import structure.Stockage;
-import structure.StructureStockage;
-import structure.Triplet;
 public class TestsPerso {
 
 	/**
