@@ -14,6 +14,9 @@ import structure.Pair;
 import structure.PairDoc;
 import structure.Stockage;
 import structure.StructureStockage;
+import structure.Bool;
+import structure.ThreadEcriture;
+import structure.ThreadLecture;
 
 public class Build {
 
@@ -62,10 +65,34 @@ public class Build {
 		
 		//Vocabulaire de l'ensemble des documents
 		BTree vocabulaire = new BTree();
-		BTreeDoc donnees;
-		
-		//Indexation de tous les documents
 		StructureStockage triplets=new StructureStockage();
+		Bool boolThread=new Bool(false);
+		
+		Thread lecture=new Thread(new ThreadLecture(boolThread, listeDocuments,
+				vocabulaire, triplets));
+		Thread ecriture=new Thread(new ThreadEcriture(boolThread, triplets, index, vocabulaire));
+		
+		System.out.println("création du BTree");
+		lecture.start();
+		//CreationBTree(listeDocuments, vocabulaire, triplets);
+		System.out.println("réussie!");
+		
+		// ecrit l'index dans le dossier "mots"
+		System.out.println("ecriture de l'index");
+		ecriture.start();
+		//EcritureIndex.creation(triplets, index);
+		System.out.println("réussie!");
+		
+		
+		
+		//Ecris la liste des documents, indexes par numero, avec leur score Wd
+		//Ecriture.ecrireDocuments(index,listeDocuments);
+	}
+	
+	public static void CreationBTree(PairDoc[] listeDocuments,
+			BTree vocabulaire, StructureStockage triplets) throws InterruptedException{
+		
+		BTreeDoc donnees;
 		for (int d = 0; d < listeDocuments.length; d++) {
 			System.out.println("Indexation du fichier " + listeDocuments[d].getPath() + " ... ");
 			//Récupère tout le vocabulaire du document dans un BTreeDoc
@@ -77,32 +104,17 @@ public class Build {
 			
 			while ((tmp = donnees.retirerMot()) != null) { //retire un élement du BTreeDoc sous forme de paire	
 				//TODO tester puis supprimer	
-				System.out.println(tmp.getMot());
 				int t = vocabulaire.insererMot(tmp.getMot()); // insertion dans le vocabulaire
+				System.out.println(tmp.getMot()+" "+t);
 				//Triplet formé par (insererMot(tmp.string),d,tmp.frequency)
 				triplets.add(t,d, (int)tmp.getFrequence());
-				//TODO
-				//TODO
+				Thread.sleep(1);
 			}
 			donnees = null; //Libération de la mémoire prise par le vocabulaire du document
 			
 			//TODO si on veut sauvegarder un run, c'est ici (vocabulaire à jour car update du nouveau document)
 			//TODO
 			//TODO
-			System.out.println("réussie!");
 		}
-		
-		// ecrit l'index dans le dossier "mots"
-		System.out.println("ecriture de l'index");
-		EcritureIndex.creation(triplets, index);
-		System.out.println("réussie!");
-		
-		// convertit id.txt en mot.txt
-		System.out.println("conversion");
-		EcritureIndex.conversionId(vocabulaire, index);
-		System.out.println("réussie!");
-		
-		//Ecris la liste des documents, indexes par numero, avec leur score Wd
-		Ecriture.ecrireDocuments(index,listeDocuments);
 	}
 }

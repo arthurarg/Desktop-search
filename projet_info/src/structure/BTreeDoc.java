@@ -105,30 +105,16 @@ public class BTreeDoc {
 	//Fonction de reequilibrage
 	//TODO verifier que c'est ok
 	private void equilibrageGauche() {
-		// On sait que this.gauche n'est pas une feuille quand on appelle cette fonction
-		if (this.droit!=null)
-			this.droit = new BTreeDoc(this.t, this.frequence, this.droit, this.gauche.droit);
-		else {
-			this.droit.t = this.t;
-			this.droit.frequence = this.frequence;
-		}	
-		
-		this.t = this.gauche.t;
-		this.frequence = this.gauche.frequence;
-		this.gauche = this.gauche.gauche;				
+		this.droit=new BTreeDoc(this.t, this.frequence, this.gauche.droit, this.droit);
+		t=gauche.t;
+		frequence=gauche.frequence;
+		gauche=gauche.gauche;
 	}
 	
 	private void equilibrageDroite() {
-		// On sait que this.droit n'est pas une feuille quand on appelle cette fonction
-		if (this.gauche != null)
-			this.gauche = new BTreeDoc(this.t, this.frequence, this.gauche, this.droit.gauche);
-		else {
-			this.gauche.t = this.t;
-			this.gauche.frequence = this.frequence;
-		}	
-		
-		this.t = this.droit.t;
-		this.frequence = this.droit.frequence;
-		this.droit = this.droit.droit;			
+		this.gauche=new BTreeDoc(this.t, this.frequence, this.gauche, this.droit.gauche);
+		t=droit.t;
+		frequence=droit.frequence;
+		droit=droit.droit;
 	}
 }

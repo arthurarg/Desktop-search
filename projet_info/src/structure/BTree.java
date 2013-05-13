@@ -95,6 +95,25 @@ public class BTree {
 			return "" + this.gauche + "(" + this.t + ", Freq : " + this.ft + ", Id : " + this.id + 
 					", Taille Gauche : " + this.gauche.size() + ", Taille Droite : " + this.droit.size() + ")" + NEW_LINE + this.droit;
 	}
+	
+	public String f(int n){
+		if (isLeaf())
+			return "";
+		String r="";
+		r=r+t;
+		r=r+" --- ";
+		if(this.droit!=null)
+			r=r+this.droit.f(n+t.length()+5)+"\n";
+		for(int i=0;i<n+t.length()+5;i++)
+			r=r+" ";
+		if(this.gauche!=null)
+			r=r+this.gauche.f(n+t.length())+"\n";
+		return r;
+	}
+	
+	public void aff(){
+		System.out.println(f(0));
+	}
 
 	
 	
@@ -115,8 +134,9 @@ public class BTree {
 	
 	//Fonction de reequilibrage
 	//TODO verifier que c'est ok
-	private void equilibrageGauche() {
+	private void equilibrageGaucheAncienneVersion() {
 		// On sait que this.gauche n'est pas une feuille quand on appelle cette fonction
+		System.out.println("GGG");
 		if (this.droit!=null)
 			this.droit = new BTree(this.t, this.ft, this.id, this.droit, this.gauche.droit);
 		else {
@@ -131,8 +151,25 @@ public class BTree {
 		this.gauche = this.gauche.gauche;				
 	}
 	
+	private void equilibrageGauche() {
+		this.droit=new BTree(this.t, this.ft, this.id, this.gauche.droit, this.droit);
+		t=gauche.t;
+		ft=gauche.ft;
+		id=gauche.id;
+		gauche=gauche.gauche;		
+	}
+	
 	private void equilibrageDroite() {
+		this.gauche=new BTree(this.t, this.ft, this.id, this.gauche, this.droit.gauche);
+		t=droit.t;
+		ft=droit.ft;
+		id=droit.id;
+		droit=droit.droit;		
+	}
+	
+	private void equilibrageDroiteAncienneVersion() {
 		// On sait que this.droit n'est pas une feuille quand on appelle cette fonction
+		System.out.println("DDD");
 		if (this.gauche != null)
 			this.gauche = new BTree(this.t, this.ft, this.id, this.gauche, this.droit.gauche);
 		else {
