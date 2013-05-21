@@ -1,11 +1,8 @@
 package structure;
 
-<<<<<<< HEAD
 import gestionIO.Lecture;
 import gestionIO.convertirIndex;
 
-=======
->>>>>>> refs/remotes/origin/master
 import java.io.File;
 import java.io.IOException;
 
