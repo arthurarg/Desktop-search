@@ -1,6 +1,7 @@
 package structure;
 
 import gestionIO.Lecture;
+import gestionIO.convertirIndex;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class ThreadEcriture implements Runnable{
 	public void run() {
 		File f=new File(new File(index,"index"), "mots");
 		try{
-			EcritureIndex.deleteFolder(f);
+			convertirIndex.deleteFolder(f);
 		}catch(IOException e){
 			System.out.println("impossible de vider le dossier");
 		}

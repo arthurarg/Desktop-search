@@ -1,4 +1,6 @@
 package structure;
+import gestionIO.convertirIndex;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,7 +14,7 @@ public class EcritureIndex {
 
 		File f=new File(new File(indexDir,"index"), "mots");
 		try{
-			deleteFolder(f);
+			convertirIndex.deleteFolder(f);
 		}catch(IOException e){
 			System.out.println("impossible de vider le dossier");
 		}
@@ -60,18 +62,4 @@ public class EcritureIndex {
 			}
 		}
 	}
-	
-	public static void deleteFolder(File path) throws IOException {
-		if (!path.exists()) throw new IOException(
-			"File not found '" + path.getAbsolutePath() + "'");
-			if (path.isDirectory()) {
-				File[] children = path.listFiles();
-				for (int i=0; children != null && i<children.length; i++)
-					deleteFolder(children[i]);
-				if (!path.delete()) throw new IOException(
-					"No delete path '" + path.getAbsolutePath() + "'");
-			}
-			else if (!path.delete()) throw new IOException(
-				"No delete file '" + path.getAbsolutePath() + "'");
-    }
 }
