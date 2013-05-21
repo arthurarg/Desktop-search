@@ -1,6 +1,7 @@
 package gestionIO;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,18 +16,7 @@ public class convertirIndex {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		System.out.println("arthudr.txt".endsWith(".txt"));
-		try {
-			conversion(new File("C:\\Users\\Arthur\\Documents\\Cours X\\inf431\\GitRepo\\projet_info"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//analyseDoc(new File("C:\\Users\\Arthur\\Documents\\Cours X\\inf431\\GitRepo\\projet_info\\index\\mots\\keeper.txt"));
-	}
-	
-	public static BTree conversion(File indexDir) throws IOException{
+	public static void conversion(File indexDir) throws IOException{
 		(new File(indexDir.getAbsolutePath()+"/index/data.txt")).delete();
 		
 		FileWriter data = new FileWriter(indexDir.getAbsolutePath()+"/index/data.txt", true);
@@ -45,8 +35,11 @@ public class convertirIndex {
 			}
 		}
 		data.close();
-		deleteFolder(wordsDir);
-		return t;
+		wordsDir.delete();
+		
+		BufferedWriter voc = new BufferedWriter (new FileWriter(indexDir+"/index/vocabulaire"));
+		t.ecritureArbre(voc);
+		voc.close();
 	}
 	
 	static boolean isTxt(File f){
@@ -63,21 +56,22 @@ public class convertirIndex {
 				String l=in.readLine();
 				data.write(l+"\r\n");
 				
-				return l.length()+1;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
+				in.close();
+				
 				f.close();
+				
+				return l.length()+1;
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return 0;
 	}
 	

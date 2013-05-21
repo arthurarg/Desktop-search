@@ -50,6 +50,14 @@ public class ThreadEcriture implements Runnable{
 		System.out.println("conversion");
 		EcritureIndex.conversionId(vocabulaire, index);
 		System.out.println("réussie!");
+		try {
+			System.out.println("compression");
+			convertirIndex.conversion(index);
+			System.out.println("réussie!");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }
