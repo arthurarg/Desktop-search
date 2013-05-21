@@ -1,5 +1,8 @@
 import gestionIO.Ecriture;
 import gestionIO.Lecture;
+
+import java.io.File;
+
 import mode.Query;
 import structure.BTree;
 
@@ -18,7 +21,7 @@ public class Test {
 		//Test le mode build sur un minuscule échantillon
 		//TestBuildFacile();
 		//Test le mode query sur un minuscule échantillon
-		TestQueryFacile();
+		//TestQueryFacile();
 	}
 
 	public static void TestBTree() {
@@ -60,8 +63,8 @@ public class Test {
 		t.insererMot("wtf");
 		t.insererMot("fuit");
 		System.out.println(t);
-		Ecriture.ecrireVocabulaire(index, t);
-		t = Lecture.lireVocabulaire(index);
+		Ecriture.ecrireVocabulaire(new File(index), t);
+		t = Lecture.lireVocabulaire(new File(index));
 		System.out.print(t);
 	}
 	

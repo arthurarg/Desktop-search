@@ -73,10 +73,10 @@ public class Lecture {
 	}
 	
 	
-	public static BTree lireVocabulaire (String index) {
+	public static BTree lireVocabulaire (File index) {
 		BTree vocabulaire = new BTree();
 		try {
-			BufferedReader f = new BufferedReader (new FileReader(index+"index/vocabulaire"));
+			BufferedReader f = new BufferedReader (new FileReader(index+"/index/vocabulaire"));
 			vocabulaire.lireArbre(f);
 			f.close();
 		}

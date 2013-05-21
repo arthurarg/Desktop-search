@@ -78,7 +78,7 @@ public class Build {
 		
 		System.out.println("création du BTree");
 		lecture.start();
-		//CreationBTree(listeDocuments, vocabulaire, triplets);
+		//CreationBTree(listeDocuments, vocabulaire, triplets); TODO supprimer
 		System.out.println("réussie!");
 		
 		// ecrit l'index dans le dossier "mots"
@@ -99,7 +99,6 @@ public class Build {
 			//Récupère tout le vocabulaire du document dans un BTreeDoc
 			donnees = Lecture.analyserDocument(new File(listeDocuments[d].getPath()));
 			listeDocuments[d].setWd(donnees.calculWd());
-			System.out.println("YEAAAAH" + donnees.calculWd());
 			
 			//Réinjecte donnees dans le BTree de vocabulaire total, tout en creant un flux de triplets
 			Pair tmp;
@@ -112,12 +111,9 @@ public class Build {
 				triplets.add(t,d, (int)tmp.getFrequence());
 				Thread.sleep(1);
 			}
-
-			donnees = null; //Libération de la mémoire prise par le vocabulaire du document
+			//Libération de la mémoire prise par le vocabulaire du document
+			donnees = null; 
 			
-			//TODO si on veut sauvegarder un run, c'est ici (vocabulaire à jour car update du nouveau document)
-			//TODO
-			//TODO
 		}
 		//Ecris la liste des documents, indexes par numero, avec leur score Wd
 		Ecriture.ecrireDocuments(index,listeDocuments);

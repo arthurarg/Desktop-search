@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
 
+import structure.BTree;
 import structure.PairDoc;
 
 public class Query {	
@@ -15,7 +16,9 @@ public class Query {
 		Scanner sc = new Scanner(System.in);
 
 		PairDoc[] documents = Lecture.lireDocuments(index);
+		BTree vocabulaire = Lecture.lireVocabulaire(index);
 		double[] scores;
+		int offset;
 		
 		while (continuer) {
 			//(Re)initialisation des scores
@@ -27,13 +30,14 @@ public class Query {
 			
 			//Traite chaque mot de la recherche
 			for (int j = 0; j < mots.length; j++) {
-				File f = new File(index.getAbsolutePath() + "/index/mots/" + mots[j] + ".txt");
-
-				if (f.exists()) {
+				offset = vocabulaire.getId(mots[j]);
+				
+				if (offset != -1) {
 					
 					try {
-						BufferedReader in = new BufferedReader(new FileReader(f));
-						// On lit la seule ligne du fichier
+						BufferedReader in = new BufferedReader(new FileReader(index + "/data"));
+						in.skip(offset);
+						// On lit la ligne du fichier correspondant au mot
 						String[] donnees = in.readLine().split(" ");
 						
 						for (int k = 0; k < donnees.length; k+=2) {
