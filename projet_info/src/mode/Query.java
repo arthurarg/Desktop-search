@@ -7,17 +7,18 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
 
+import structure.BTree;
 import structure.PairDoc;
 
-public class Query {
-//TODO verifier que cela fonctionne vraiment (résultats parfois différents)
-	
+public class Query {	
 	public static void query(File index, int n) {
 		boolean continuer = true;
 		Scanner sc = new Scanner(System.in);
 
 		PairDoc[] documents = Lecture.lireDocuments(index);
+		BTree vocabulaire = Lecture.lireVocabulaire(index);
 		double[] scores;
+		int offset;
 		
 		while (continuer) {
 			//(Re)initialisation des scores
@@ -29,13 +30,14 @@ public class Query {
 			
 			//Traite chaque mot de la recherche
 			for (int j = 0; j < mots.length; j++) {
-				File f = new File(index.getAbsolutePath() + "/index/mots/" + mots[j] + ".txt");
-
-				if (f.exists()) {
+				offset = vocabulaire.getId(mots[j]);
+				
+				if (offset != -1) {
 					
 					try {
-						BufferedReader in = new BufferedReader(new FileReader(f));
-						// On lit la seule ligne du fichier
+						BufferedReader in = new BufferedReader(new FileReader(index + "/data"));
+						in.skip(offset);
+						// On lit la ligne du fichier correspondant au mot
 						String[] donnees = in.readLine().split(" ");
 						
 						for (int k = 0; k < donnees.length; k+=2) {
@@ -45,11 +47,10 @@ public class Query {
 							//TODO vérifier formule; le facteur 2 vient du fait que donnees contient deux chiffres (n° doc, frequence)
 							
 						}
-						//Normalisaton en divisant par wd TODO verifier calcu wd, on diviser par le carré ou pas ??
-						for (int l = 0; l < scores.length; l++) {
+						//Normalisaton en divisant par wd
+						for (int l = 0; l < scores.length; l++)
 							scores[l] /= documents[l].getWd();
-							System.out.println("" + documents[l].getWd() + "score " + scores[l]);
-						}
+						
 						
 						//fermeture de la source de lecture
 						in.close();
@@ -60,9 +61,10 @@ public class Query {
 				
 				int[] resultats = renvoiIndicesMax(scores,n);
 				
+				System.out.println("Resultats pertinents : ");
 				for (int l = 0; l < resultats.length; l++) {
 					if (scores[resultats[l]] != 0)
-						System.out.println("hih" +documents[resultats[l]].getPath());
+						System.out.println(documents[resultats[l]].getPath());
 				}
 			}
 		}		

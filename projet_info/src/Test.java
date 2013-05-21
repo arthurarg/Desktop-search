@@ -1,6 +1,9 @@
-import mode.Query;
 import gestionIO.Ecriture;
 import gestionIO.Lecture;
+
+import java.io.File;
+
+import mode.Query;
 import structure.BTree;
 
 
@@ -18,7 +21,7 @@ public class Test {
 		//Test le mode build sur un minuscule échantillon
 		//TestBuildFacile();
 		//Test le mode query sur un minuscule échantillon
-		TestQueryFacile();
+		//TestQueryFacile();
 	}
 
 	public static void TestBTree() {
@@ -43,7 +46,7 @@ public class Test {
 	
 	public static void TestQueryFacile() {
 		// Chemin à  modifier sur chaque machine
-		String index = "C:/Users/Arthur/Desktop/";
+		String index = "/Users/jean-maxime/Documents/Informatique/Git/projet_info/projet_info/fichierstests/";
 		String[] arguments = ("query --index-directory " + index + " --max 5").split(" ");
 		Main.main(arguments);
 	}
@@ -60,8 +63,8 @@ public class Test {
 		t.insererMot("wtf");
 		t.insererMot("fuit");
 		System.out.println(t);
-		Ecriture.ecrireVocabulaire(index, t);
-		t = Lecture.lireVocabulaire(index);
+		Ecriture.ecrireVocabulaire(new File(index), t);
+		t = Lecture.lireVocabulaire(new File(index));
 		System.out.print(t);
 	}
 	

@@ -78,6 +78,18 @@ public class BTree {
 		return p;
 	}
 	
+	public int getId(String mot) {
+		if (this.t.equals(mot))
+			return (this.id);
+		if (this.t.compareTo(mot) > 0 && this.droit != null)
+			return this.droit.getId(mot);
+		if (this.t.compareTo(mot) < 0 && this.gauche != null)
+			return this.droit.getId(mot);
+		
+		//Si le mot n'existe pas dans le BTree, on renvoie -1
+		return -1;
+	}
+	
 	
 	public boolean isLeaf() {
 		return (this.t == null);
@@ -133,23 +145,7 @@ public class BTree {
 	}	
 	
 	//Fonction de reequilibrage
-	//TODO verifier que c'est ok
-	private void equilibrageGaucheAncienneVersion() {
-		// On sait que this.gauche n'est pas une feuille quand on appelle cette fonction
-		System.out.println("GGG");
-		if (this.droit!=null)
-			this.droit = new BTree(this.t, this.ft, this.id, this.droit, this.gauche.droit);
-		else {
-			this.droit.t = this.t;
-			this.droit.ft = this.ft;
-			this.droit.id = this.id;
-		}	
-		
-		this.t = this.gauche.t;
-		this.ft = this.gauche.ft;
-		this.id = this.gauche.id;
-		this.gauche = this.gauche.gauche;				
-	}
+
 	
 	private void equilibrageGauche() {
 		this.droit=new BTree(this.t, this.ft, this.id, this.gauche.droit, this.droit);
@@ -167,29 +163,13 @@ public class BTree {
 		droit=droit.droit;		
 	}
 	
-	private void equilibrageDroiteAncienneVersion() {
-		// On sait que this.droit n'est pas une feuille quand on appelle cette fonction
-		System.out.println("DDD");
-		if (this.gauche != null)
-			this.gauche = new BTree(this.t, this.ft, this.id, this.gauche, this.droit.gauche);
-		else {
-			this.gauche.t = this.t;
-			this.gauche.ft = this.ft;
-			this.gauche.id = this.id;
-		}	
-		
-		this.t = this.droit.t;
-		this.ft = this.droit.ft;
-		this.id = this.droit.id;
-		this.droit = this.droit.droit;			
-	}
 	
 //---------
 // Fonctions auxiliaires pour écrire/lire l'arbre sur le disque dur
 //---------
 	public void ecritureArbre (BufferedWriter f) throws IOException {
 		if (!this.isLeaf()) {
-			f.write("" + this.t + " " + this.ft + " " + this.id + NEW_LINE);
+			f.write("" + this.t + " " + this.ft + NEW_LINE);
 			this.gauche.ecritureArbre(f);
 			this.droit.ecritureArbre(f);
 		}
@@ -208,7 +188,7 @@ public class BTree {
 		String[] data = s.split(" ");
 		this.t = data[0];
 		this.ft = Integer.parseInt(data[1]);
-		this.id = Integer.parseInt(data[2]);
+		this.id = 0;
 		this.gauche = new BTree();
 		this.droit = new BTree();
 		this.gauche.lireArbre(f);

@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.ObjectOutputStream;
 
 import structure.BTree;
+import structure.BTreeDoc;
 import structure.PairDoc;
 
 public class Ecriture {
@@ -36,18 +37,10 @@ public class Ecriture {
 			System.exit(1);
 		}
 	}
-	
-	
-	
-	public static void ecrireVocabulaire (String index, BTree vocabulaire) {
-		//Cree le dossier qui va bien
-		File indexFolder = new File(index + "index");
-		if (!indexFolder.exists())
-			indexFolder.mkdir();
-		//TODO tester le cas ou ce n'est pas un dossier ?
 		
+	public static void ecrireVocabulaire (File index, BTree vocabulaire) {	
 		try {
-			BufferedWriter f = new BufferedWriter (new FileWriter(index+"index/vocabulaire"));
+			BufferedWriter f = new BufferedWriter (new FileWriter(index+"/index/vocabulaire"));
 			vocabulaire.ecritureArbre(f);
 			f.close();
 		}
@@ -57,4 +50,6 @@ public class Ecriture {
 			System.exit(1);
 		}	
 	}
+	
+	
 }
