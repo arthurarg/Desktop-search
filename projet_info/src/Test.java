@@ -19,7 +19,7 @@ public class Test {
 		//TestTriFusion();
 		
 		//Test le mode build sur un minuscule échantillon
-		//TestBuildFacile();
+		TestBuildFacile();
 		//Test le mode query sur un minuscule échantillon
 		//TestQueryFacile();
 	}

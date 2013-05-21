@@ -30,7 +30,7 @@ public class convertirIndex {
 		for (int i=0; words != null && i<words.length; i++){
 			if(isTxt(words[i])){
 				t.insererMot(getWord(words[i]), n);
-				n=n+insererMot(data, words[i]);
+				n=n+1+insererMot(data, words[i]);
 				System.out.println(words[i].getAbsolutePath()+" "+words[i].delete());
 			}
 		}

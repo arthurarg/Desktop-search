@@ -78,13 +78,16 @@ public class BTree {
 		return p;
 	}
 	
-	public int getId(String mot) {
+	public int getFt(String mot) {
+		if (this.t == null) 
+			return -1;
 		if (this.t.equals(mot))
-			return (this.id);
-		if (this.t.compareTo(mot) > 0 && this.droit != null)
-			return this.droit.getId(mot);
-		if (this.t.compareTo(mot) < 0 && this.gauche != null)
-			return this.droit.getId(mot);
+			return (this.ft);
+		if (this.t.compareTo(mot) < 0 && this.droit != null)
+			return this.droit.getFt(mot);
+		if (this.t.compareTo(mot) > 0 && this.gauche != null) 
+			return this.gauche.getFt(mot);
+		
 		
 		//Si le mot n'existe pas dans le BTree, on renvoie -1
 		return -1;

@@ -19,10 +19,16 @@ public class Build {
 
 	public static void build(File index, LinkedList<File> root, String regex) {
 //-------
-//TODO Supprime l'index s'il existe deja
+//Supprime l'index s'il existe deja
 //-------
-		if (new File(index.getAbsolutePath() + "/index/").exists())
+		if (new File(index.getAbsolutePath() + "/index/").exists()) {
+			System.out.println("YEEEAHH");
+			File[] tab = new File(index.getAbsolutePath() + "/index/").listFiles();
+			for (int k = 0; k< tab.length ;k++)
+				tab[k].delete();
+
 			new File(index.getAbsolutePath() + "/index/").delete();
+		}
 		
 		new File(index.getAbsolutePath() + "/index/").mkdir();
 		

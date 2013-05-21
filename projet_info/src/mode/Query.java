@@ -30,12 +30,12 @@ public class Query {
 			
 			//Traite chaque mot de la recherche
 			for (int j = 0; j < mots.length; j++) {
-				offset = vocabulaire.getId(mots[j]);
+				offset = vocabulaire.getFt(mots[j]);
 				
 				if (offset != -1) {
 					
 					try {
-						BufferedReader in = new BufferedReader(new FileReader(index + "/data"));
+						BufferedReader in = new BufferedReader(new FileReader(index + "/index/data.txt"));
 						in.skip(offset);
 						// On lit la ligne du fichier correspondant au mot
 						String[] donnees = in.readLine().split(" ");
