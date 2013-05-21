@@ -169,7 +169,7 @@ public class BTree {
 //---------
 	public void ecritureArbre (BufferedWriter f) throws IOException {
 		if (!this.isLeaf()) {
-			f.write("" + this.t + " " + this.id + NEW_LINE);
+			f.write("" + this.t + " " + this.ft + NEW_LINE);
 			this.gauche.ecritureArbre(f);
 			this.droit.ecritureArbre(f);
 		}
@@ -187,8 +187,8 @@ public class BTree {
 		
 		String[] data = s.split(" ");
 		this.t = data[0];
-		this.id = Integer.parseInt(data[1]);
-		this.ft = 0;
+		this.ft = Integer.parseInt(data[1]);
+		this.id = 0;
 		this.gauche = new BTree();
 		this.droit = new BTree();
 		this.gauche.lireArbre(f);
