@@ -22,7 +22,6 @@ public class Build {
 //Supprime l'index s'il existe deja
 //-------
 		if (new File(index.getAbsolutePath() + "/index/").exists()) {
-			System.out.println("YEEEAHH");
 			File[] tab = new File(index.getAbsolutePath() + "/index/").listFiles();
 			for (int k = 0; k< tab.length ;k++)
 				tab[k].delete();
@@ -101,7 +100,7 @@ public class Build {
 		
 		BTreeDoc donnees;
 		for (int d = 0; d < listeDocuments.length; d++) {
-			System.out.println("Indexation du fichier " + listeDocuments[d].getPath() + " ... ");
+			//System.out.println("Indexation du fichier " + listeDocuments[d].getPath() + " ... ");
 			//Récupère tout le vocabulaire du document dans un BTreeDoc
 			donnees = Lecture.analyserDocument(new File(listeDocuments[d].getPath()));
 			listeDocuments[d].setWd(donnees.calculWd());
@@ -112,7 +111,7 @@ public class Build {
 			while ((tmp = donnees.retirerMot()) != null) { //retire un élement du BTreeDoc sous forme de paire	
 				//TODO tester puis supprimer	
 				int t = vocabulaire.insererMot(tmp.getMot()); // insertion dans le vocabulaire
-				System.out.println(tmp.getMot()+" "+t);
+				//System.out.println(tmp.getMot()+" "+t);
 				//Triplet formé par (insererMot(tmp.string),d,tmp.frequency)
 				triplets.add(t,d, (int)tmp.getFrequence());
 				Thread.sleep(1);

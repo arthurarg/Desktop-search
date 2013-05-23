@@ -31,7 +31,7 @@ public class convertirIndex {
 			if(isTxt(words[i])){
 				t.insererMot(getWord(words[i]), n);
 				n=n+1+insererMot(data, words[i]);
-				System.out.println(words[i].getAbsolutePath()+" "+words[i].delete());
+				words[i].delete();
 			}
 		}
 		data.close();

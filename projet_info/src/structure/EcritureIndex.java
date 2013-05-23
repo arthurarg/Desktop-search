@@ -33,8 +33,8 @@ public class EcritureIndex {
 		if(tr!=null){
 			try{
 
-				System.out.println("ajout de "+tr.t+".txt à l'index");
-				System.out.println(path+tr.t+".txt");
+				//System.out.println("ajout de "+tr.t+".txt à l'index");
+				//System.out.println(path+tr.t+".txt");
 
 				FileWriter file = new FileWriter(path+tr.t+".txt", true);
 				file.write(tr.d+" "+tr.f+" ");
@@ -56,7 +56,7 @@ public class EcritureIndex {
 			PairMot p;
 			
 			while((p=voc.retirerMot())!=null){
-				System.out.println(p.id+" -> "+p.mot);
+				//System.out.println(p.id+" -> "+p.mot);
 				id=new File(path+p.id+".txt");
 				id.renameTo(new File(path+p.mot+".txt"));
 			}
